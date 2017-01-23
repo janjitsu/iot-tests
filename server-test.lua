@@ -19,12 +19,15 @@ srv:listen(80,function(conn)
         headers = "HTTP/1.0 200 OK\r\n"
         headers = headers.."Content-Type: application/json\r\n"
 
-        body = "{"
-        body = body.."occupied: "..gpio.read(7)
-        body = body.."}"
+        body = "{\r\n"
+        body = body.."'occupied': "..gpio.read(7)
+        body = body.."\r\n}"
 
         conn:send(headers.."\r\n"..body,function(sk)
             sk:close()
         end)
+
+        print("Going to sleep now...")
+        node.dsleep(0)
     end)
 end)
